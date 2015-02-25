@@ -98,8 +98,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1.9963116645812988</real>
-							<real>1.9671745300292969</real>
+							<real>2.0023915767669678</real>
+							<real>1.999495267868042</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -156,6 +156,8 @@
 						<array/>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -189,8 +191,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>160</real>
-							<real>64.135978698730469</real>
+							<real>157.37394714355469</real>
+							<real>76</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -295,7 +297,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>PeevedPenguinsAssets/button.png</string>
+							<string>ccbResources/ccbButtonHighlighted.png</string>
 						</array>
 					</dict>
 					<dict>
