@@ -2,11 +2,14 @@
 
 #import "MainScene.h"
 
+
+
+#define ARC4RANDOM_MAX      0x100000000
+
 static const CGFloat scrollSpeed = 80.f;
 static const CGFloat firstObstaclePosition = 280.f;
 static const CGFloat distanceBetweenObstacles = 160.f;
 
-#define ARC4RANDOM_MAX      0x100000000
 // visibility on a 3,5-inch iPhone ends a 88 points and we want some meat
 static const CGFloat minimumYPositionTopPipe = 128.f;
 // visibility ends at 480 and we want some meat
@@ -48,7 +51,7 @@ static const CGFloat maximumYPositionTopPipe = maximumYPositionBottomPipe - pipe
         previousObstacleXPosition = firstObstaclePosition;
     }
     CCNode *obstacle = [CCBReader load:@"obstacle"];
-//    obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
+    obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
     CGFloat random = ((double)arc4random() / ARC4RANDOM_MAX);
     CGFloat range = 400 - 0;
     obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, (random * range));
@@ -79,17 +82,16 @@ static const CGFloat maximumYPositionTopPipe = maximumYPositionBottomPipe - pipe
         // get the screen position of the ground
         CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
         
-        //        NSLog(@"The groundWorldPosition: %f, groundScreenPosition: %f", groundWorldPosition.x, groundScreenPosition.x);
+        //NSLog(@"ground.position: %f, The groundWorldPosition: %f, groundScreenPosition: %f", ground.position.x, groundWorldPosition.x, groundScreenPosition.x);
         
         // if the left corner is one complete width off the screen, move it to the right
         if (groundScreenPosition.x <= (-1 * ground.contentSize.width)) {
             ground.position = ccp(ground.position.x + 3 * ground.contentSize.width, ground.position.y);
             
-            //NSLog(@"Change: The groundWorldPosition: %f, groundScreenPosition: %f, ground.position:%f", groundWorldPosition.x, groundScreenPosition.x, ground.position.x);
+            //NSLog(@"ground.position: %f, The groundWorldPosition: %f, groundScreenPosition: %f", ground.position.x, groundWorldPosition.x, groundScreenPosition.x);
             
         }
-    }
-    
+    }    
 
     [self spawnNewObstacle];
 }
