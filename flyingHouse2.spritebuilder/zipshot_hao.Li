@@ -1,0 +1,9 @@
+The Milestores:
+Week of 17:
+1. Refine the speedup caculation. Make it a litte bit quicker.
+Detail: Change the ruls of the speedup and slow down. 
+
+Week of 18:
+1. Add a power bar to know how fast he/she is going.
+2. Add animations: add some effects that the user know when he can launch.
+3. Introdue some new movements for the circles. Like they will move around to make it difficult to catch them.
