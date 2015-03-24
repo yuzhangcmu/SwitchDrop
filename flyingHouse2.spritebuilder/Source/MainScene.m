@@ -1,7 +1,7 @@
 #import "MainScene.h"
 
 #import "MainScene.h"
-
+#import "Obstacle.h"
 
 
 #define ARC4RANDOM_MAX      0x100000000
@@ -19,6 +19,12 @@ static const CGFloat pipeDistance = 142.f;
 // calculate the end of the range of top pipe
 static const CGFloat maximumYPositionTopPipe = maximumYPositionBottomPipe - pipeDistance;
 
+typedef NS_ENUM(NSInteger, DrawingOrder) {
+    DrawingOrderPipes,
+    DrawingOrderGround,
+    DrawingOrdeHero
+};
+
 @implementation MainScene {
     CCSprite *_hero;
     CCPhysicsNode *_pyhNode;
@@ -30,17 +36,33 @@ static const CGFloat maximumYPositionTopPipe = maximumYPositionBottomPipe - pipe
     NSArray *_grounds;
     
     NSMutableArray *_obstacles;
+    
+    CCButton *_restartButton;
+}
+
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero level:(CCNode *)level {
+    NSLog(@"Game Over");
+    return TRUE;
 }
 
 - (void)didLoadFromCCB {
     _grounds = @[_ground1, _ground2, _ground3];
     self.userInteractionEnabled = TRUE;
     
+    // set this class as delegate
+    _pyhNode.collisionDelegate = self;
+    // set collision txpe
+    
+    _hero.physicsBody.collisionType = @"hero";
+    _hero.zOrder = DrawingOrdeHero;
+    
     _obstacles = [NSMutableArray array];
     
     [self spawnNewObstacle];
     [self spawnNewObstacle];
     [self spawnNewObstacle];
+    
+    
 }
 
 - (void)spawnNewObstacle {
@@ -54,13 +76,12 @@ static const CGFloat maximumYPositionTopPipe = maximumYPositionBottomPipe - pipe
     obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
     CGFloat random = ((double)arc4random() / ARC4RANDOM_MAX);
     CGFloat range = 400 - 0;
+    
     obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, (random * range));
     [_pyhNode addChild:obstacle];
     [_obstacles addObject:obstacle];
     
     // value between 0.f and 1.f
-    
-
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
@@ -95,6 +116,5 @@ static const CGFloat maximumYPositionTopPipe = maximumYPositionBottomPipe - pipe
 
     [self spawnNewObstacle];
 }
-
 
 @end

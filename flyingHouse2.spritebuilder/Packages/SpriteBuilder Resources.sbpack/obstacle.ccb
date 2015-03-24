@@ -47,11 +47,11 @@
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
-				<string></string>
+				<string>Obstacle</string>
 				<key>displayName</key>
 				<string>Balloons_01_256x256_Alt_02_001@4x</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>_bigBalloon</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>physicsBody</key>
@@ -67,7 +67,7 @@
 					<key>collisionMask</key>
 					<array/>
 					<key>collisionType</key>
-					<string></string>
+					<string>level</string>
 					<key>cornerRadius</key>
 					<real>64</real>
 					<key>density</key>
