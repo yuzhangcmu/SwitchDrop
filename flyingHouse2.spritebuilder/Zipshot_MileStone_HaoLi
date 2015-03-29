@@ -2,6 +2,7 @@ The Milestores:
 Week of 17:
 1. Refine the speedup caculation. Make it a litte bit quicker.
 Detail: Change the ruls of the speedup and slow down. 
+Status: Done.
 
 Week of 18:
 1. Add a power bar to know how fast he/she is going.
