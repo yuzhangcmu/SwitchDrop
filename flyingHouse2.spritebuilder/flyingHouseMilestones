@@ -1,10 +1,19 @@
 Due on March 24
--Failure condition for the game  : Done.
--Adding and deleting balloons from house :move to next week.
--Accelerometer feature for control       :move to next week.
--Keeping track of the score for the game :move to next week.
+-Adding and deleting balloons from house
+-Accelerometer feature for control
+-Keeping track of the score for the game
+-Failure condition for the game
+
+Accomplished:
+-Failure condition for the game - game restarts when collision
+About one week behind on implementing the features
 
 Due on March 31
 -Adding and deleting balloons from house
 -Accelerometer feature for control
 -Keeping track of the score for the game
+
+Due on March 7
+-Add new level - more balloons and faster movement
+-Add birds as another obstacle that moves even faster
+-Add prizes that can be collected
