@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>4</integer>
+	<integer>14</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -41,7 +41,7 @@
 		<array>
 			<dict>
 				<key>UUID</key>
-				<integer>1</integer>
+				<integer>13</integer>
 				<key>baseClass</key>
 				<string>CCSprite</string>
 				<key>children</key>
@@ -49,7 +49,7 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>Balloons_01_256x256_Alt_02_001@4x</string>
+				<string>purple-balloon-clipart-balloons6</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -71,8 +71,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>39.055377960205078</real>
-							<real>148.98077392578125</real>
+							<real>5.6000633239746094</real>
+							<real>81.5</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -96,19 +96,11 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.45073899626731873</real>
-							<real>0.52825886011123657</real>
+							<real>0.50485450029373169</real>
+							<real>0.41914179921150208</real>
 							<false/>
 							<integer>0</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>-21.022148132324219</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -118,7 +110,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>FlappyFlyArtPack/Balloons_01_256x256_Alt_02_001@4x.png</string>
+							<string>ccbResources/purple-balloon-clipart-balloons6.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -157,7 +149,7 @@
 			</dict>
 			<dict>
 				<key>UUID</key>
-				<integer>3</integer>
+				<integer>8</integer>
 				<key>baseClass</key>
 				<string>CCSprite</string>
 				<key>children</key>
@@ -165,7 +157,7 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>Balloons_01_256x256_Alt_03_004@4x</string>
+				<string>house3</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -187,8 +179,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>100</real>
-							<real>140</real>
+							<real>5.6000633239746094</real>
+							<real>0.0</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -212,19 +204,11 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.80000001192092896</real>
+							<real>0.80000001192092896</real>
 							<false/>
 							<integer>0</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>32.087913513183594</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -234,7 +218,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>FlappyFlyArtPack/Balloons_01_256x256_Alt_03_004@4x.png</string>
+							<string>FlappyFlyArtPack/house3.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -283,7 +267,7 @@
 		<key>physicsBody</key>
 		<dict>
 			<key>affectedByGravity</key>
-			<false/>
+			<true/>
 			<key>allowsRotation</key>
 			<false/>
 			<key>bodyShape</key>
@@ -293,9 +277,9 @@
 			<key>collisionMask</key>
 			<array/>
 			<key>collisionType</key>
-			<string>hero</string>
+			<string></string>
 			<key>cornerRadius</key>
-			<real>64</real>
+			<real>48.000389099121094</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -307,8 +291,8 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>64</real>
-					<real>64</real>
+					<real>4.9219350814819336</real>
+					<real>-2.400029182434082</real>
 				</array>
 			</array>
 			<key>polygons</key>
@@ -370,7 +354,7 @@
 				<key>value</key>
 				<array>
 					<string></string>
-					<string>FlappyFlyArtPack/house3.png</string>
+					<string></string>
 				</array>
 			</dict>
 			<dict>
@@ -406,8 +390,6 @@
 				<array/>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

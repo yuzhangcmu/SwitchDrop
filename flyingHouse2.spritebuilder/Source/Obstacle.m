@@ -14,9 +14,9 @@
 
 - (void)didLoadFromCCB {
     _bigBalloon.physicsBody.collisionType = @"level";
-    _bigBalloon.physicsBody.sensor = TRUE;
     
-    
+    //This means that the collisions will be detected by your objects and you can have access to them via callbacks, but they will not actually interact.
+    //_bigBalloon.physicsBody.sensor = TRUE;
 }
 
 

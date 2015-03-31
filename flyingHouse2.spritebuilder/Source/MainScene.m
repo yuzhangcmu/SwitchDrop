@@ -1,23 +1,20 @@
 #import "MainScene.h"
 
+// Support the motion control.
+
 #import "MainScene.h"
 #import "Obstacle.h"
 
+#import "CoreMotion/CoreMotion.h"
+
+@import SpriteKit;
 
 #define ARC4RANDOM_MAX      0x100000000
 
-static const CGFloat scrollSpeed = 80.f;
+CCButton *_restartButton;
+
 static const CGFloat firstObstaclePosition = 280.f;
 static const CGFloat distanceBetweenObstacles = 160.f;
-
-// visibility on a 3,5-inch iPhone ends a 88 points and we want some meat
-static const CGFloat minimumYPositionTopPipe = 128.f;
-// visibility ends at 480 and we want some meat
-static const CGFloat maximumYPositionBottomPipe = 440.f;
-// distance between top and bottom pipe
-static const CGFloat pipeDistance = 142.f;
-// calculate the end of the range of top pipe
-static const CGFloat maximumYPositionTopPipe = maximumYPositionBottomPipe - pipeDistance;
 
 typedef NS_ENUM(NSInteger, DrawingOrder) {
     DrawingOrderPipes,
@@ -27,6 +24,9 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 
 @implementation MainScene {
     CCSprite *_hero;
+    CCNode *_walls;
+    
+    
     CCPhysicsNode *_pyhNode;
     
     CCNode *_ground1;
@@ -38,12 +38,73 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     NSMutableArray *_obstacles;
     
     CCButton *_restartButton;
+    
+    BOOL _gameOver;
+    CGFloat _scrollSpeed;
+    
+    CMMotionManager *_motionManager;
+    
+    NSInteger _points;
+    CCLabelTTF *_scoreLabel;
 }
 
+//Next, extend the collision handling method to show this restart button:
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero level:(CCNode *)level {
     NSLog(@"Game Over");
+    [self gameOver];
+
     return TRUE;
 }
+
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero goal:(CCNode *)goal {
+//    [goal removeFromParent];
+//    _points++;
+//    _scoreLabel.string = [NSString stringWithFormat:@"%d", _points];
+    return TRUE;
+}
+
+- (void)restart {
+    CCScene *scene = [CCBReader loadAsScene:@"MainScene"];
+    [[CCDirector sharedDirector] replaceScene:scene];
+}
+
+#pragma The_accelerometer
+
+// Create the board of the screen.
+- (void) createSceneContents
+{
+    
+}
+
+
+- (id) init {
+    if (self = [super init])
+    {
+        _motionManager = [[CMMotionManager alloc] init];
+        
+        // Create the board of the screen.
+        //self.window.rootViewController.view.backgroundColor = [SKColor blackColor];
+//        self.view.scaleMode = SKSceneScaleModeAspectFit;
+  //      self.view.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+    }
+    return self;
+}
+
+
+
+- (void)onEnter
+{
+    [super onEnter];
+    [_motionManager startAccelerometerUpdates];
+}
+
+- (void)onExit
+{
+    [super onExit];
+    [_motionManager stopAccelerometerUpdates];
+}
+#pragma <#arguments#>
+
 
 - (void)didLoadFromCCB {
     _grounds = @[_ground1, _ground2, _ground3];
@@ -62,7 +123,13 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     [self spawnNewObstacle];
     [self spawnNewObstacle];
     
-    
+    // Init the speed.
+    _scrollSpeed = 80.f;
+}
+
+- (void) addScoreByOne {
+    _points++;
+    _scoreLabel.string = [NSString stringWithFormat:@"%d", _points];
 }
 
 - (void)spawnNewObstacle {
@@ -74,27 +141,78 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     }
     CCNode *obstacle = [CCBReader load:@"obstacle"];
     obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
-    CGFloat random = ((double)arc4random() / ARC4RANDOM_MAX);
-    CGFloat range = 400 - 0;
     
-    obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, (random * range));
+    CGFloat random = ((double)arc4random() / ARC4RANDOM_MAX);
+    
+    // 70: the lowest place.
+    CGFloat range = 400 - 70;
+    
+    obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 200+ (random * range));
+    
     [_pyhNode addChild:obstacle];
     [_obstacles addObject:obstacle];
+    
+    NSLog(@"the position of obstacle: %f", obstacle.position.x);
+    //[self addScoreByOne];
     
     // value between 0.f and 1.f
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    [_hero.physicsBody applyImpulse:ccp(0, 400.f)];
+    if (!_gameOver) {
+//        [_hero.physicsBody applyImpulse:ccp(0, 400.f)];
+//        [_hero.physicsBody applyAngularImpulse:10000.f];
+//        _sinceTouch = 0.f;
+        
+        [_hero.physicsBody applyImpulse:ccp(0, 400.f)];
+        
+        // clamp velocity
+        float yVelocity = clampf(_hero.physicsBody.velocity.y, -1 * MAXFLOAT, 200.f);
+        _hero.physicsBody.velocity = ccp(0, yVelocity);
+    }
     
-    // clamp velocity
-    float yVelocity = clampf(_hero.physicsBody.velocity.y, -1 * MAXFLOAT, 200.f);
-    _hero.physicsBody.velocity = ccp(0, yVelocity);
+    
+}
+
+- (void)gameOver {
+    if (!_gameOver) {
+        _scrollSpeed = 0.f;
+        _gameOver = TRUE;
+        _restartButton.visible = TRUE;
+        _hero.rotation = 90.f;
+        _hero.physicsBody.allowsRotation = FALSE;
+        
+        [_hero stopAllActions];
+        CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:0.2f position:ccp(-2, 2)];
+        CCActionInterval *reverseMovement = [moveBy reverse];
+        CCActionSequence *shakeSequence = [CCActionSequence actionWithArray:@[moveBy, reverseMovement]];
+        CCActionEaseBounce *bounce = [CCActionEaseBounce actionWithAction:shakeSequence];
+        [self runAction:bounce];
+        
+        // Stop the Accelerometer.
+        [_motionManager stopAccelerometerUpdates];
+    }
 }
 
 - (void)update:(CCTime)delta {
-    _hero.position = ccp(_hero.position.x + delta * scrollSpeed, _hero.position.y);
-    _pyhNode.position = ccp(_pyhNode.position.x - delta * scrollSpeed, _pyhNode.position.y);
+    _hero.position = ccp(_hero.position.x + delta * _scrollSpeed, _hero.position.y);
+    
+    //_walls.position = ccp(_walls.position.x + delta * _scrollSpeed, _walls.position.y);
+    
+    // Use this to detect the movement of the house.
+    CMAccelerometerData *accelerometerData = _motionManager.accelerometerData;
+    CMAcceleration acceleration = accelerometerData.acceleration;
+    
+    //CGFloat newXPosition = _hero.position.x + acceleration.x * 1000 * delta;
+    CGFloat newXPosition = _hero.position.x + acceleration.x * 500 * delta;
+    
+    // Limit the value to be from 0 to self.contentSize.width
+    //newXPosition = clampf(newXPosition, 0, self.contentSize.width);
+    
+    _hero.position = CGPointMake(newXPosition, _hero.position.y);
+    //    _label.position = CGPointMake(newXPosition, _label.position.y);
+    
+    _pyhNode.position = ccp(_pyhNode.position.x - delta * _scrollSpeed, _pyhNode.position.y);
     
     // loop the ground
     for (CCNode *ground in _grounds) {
@@ -111,10 +229,13 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
             
             //NSLog(@"ground.position: %f, The groundWorldPosition: %f, groundScreenPosition: %f", ground.position.x, groundWorldPosition.x, groundScreenPosition.x);
             
+            [self addScoreByOne];            
         }
     }    
 
     [self spawnNewObstacle];
+    
+    
 }
 
 @end
