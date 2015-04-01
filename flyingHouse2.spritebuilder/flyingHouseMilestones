@@ -13,7 +13,13 @@ Due on March 31
 -Accelerometer feature for control
 -Keeping track of the score for the game
 
+Accomplished:
+-Decided to drop feature to add and delete balloons from house
+-Added a splash screen before gameplay
+-Added a customized application launch icon
+-Added accelerometer to control movement of house
+-Added display to show score on gameplay
+
 Due on April 7
--Add new level - more balloons and faster movement
--Add birds as another obstacle that moves even faster
--Add prizes that can be collected
+-Collect weapons to clear obstacles
+-Add prizes that can be collected and update score
