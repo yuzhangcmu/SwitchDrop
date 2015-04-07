@@ -1,10 +1,10 @@
 The Milestores:
-Week of 17:
+Week of March 24:
 1. Refine the speedup caculation. Make it a litte bit quicker.
 Detail: Change the ruls of the speedup and slow down. 
 Status: Done.
 
-Week of 18:
+Week of March 31:
 1. Add a power bar to know how fast he/she is going.
 2. Add animations: add some effects that the user know when he can launch.
 3. Introdue some new movements for the circles. Like they will move around to make it difficult to catch them.
@@ -15,7 +15,14 @@ Done:
 3. Want to drop the feature of point 3: Introdue some new movements for the circles. Like they will move around to make it difficult to catch them.
 instead, introduce some other colors, like we have different colors and should change the color to launch.
 
-Week of 19:
+Week of April 7:
 1. introduce some other colors, like we have different colors and should change the color to launch.
 2. May be working on the introducing new movements.
+
+Done:
+1. introduce some other colors.
+
+(3 weeks left)
+Week of April 14:
+1. Add movement target.
 
