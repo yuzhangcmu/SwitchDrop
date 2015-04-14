@@ -26,3 +26,8 @@ Done:
 Week of April 14:
 1. Add movement target.
 
+PROGRESS: Tried various methods of introducing moving and multiple targets; not visually appealing and did not keep.
+
+Week of April 21:
+-Implement colored indicators to show next targets from faster reactions.
+-Implement changing backgrounds with blended transitions.
