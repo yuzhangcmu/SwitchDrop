@@ -23,3 +23,20 @@ Accomplished:
 Due on April 7
 -Collect weapons to clear obstacles
 -Add prizes that can be collected and update score
+
+Accomplished:
+-Added prizes to increase score
+-Boundaries to prevent moving off screen
+
+One liner: flying house and crazy hot air baloons
+theme from Up!
+
+Due on April 14
+-Add bombs to clear balloons
+-Add effects to bombs and perhaps lightning to clear screen
+
+Accomplished:
+-Delayed; will try to finish in a few days.
+
+Due on April 21
+-Implement scoreboard at end of game; keep track of high score
