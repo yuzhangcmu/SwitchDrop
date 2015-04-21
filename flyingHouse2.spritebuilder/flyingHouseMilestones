@@ -40,3 +40,10 @@ Accomplished:
 
 Due on April 21
 -Implement scoreboard at end of game; keep track of high score
+
+Accomplished:
+-Added bombs to clear all obstacles on screen; can obtain bombs by colliding
+
+Due April 28
+-Add polish
+-Add scoreboard display
