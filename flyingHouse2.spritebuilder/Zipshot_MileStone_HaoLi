@@ -31,3 +31,11 @@ PROGRESS: Tried various methods of introducing moving and multiple targets; not 
 Week of April 21:
 -Implement colored indicators to show next targets from faster reactions.
 -Implement changing backgrounds with blended transitions.
+
+PROGRESS: 
+1. Implement colored indicators to show next targets from faster reactions.
+2. Changed the UI for switching colors.
+
+Week of April 22:
+TODO: change zip out to dynmic phsics , to minimize physics overhead
+TODO: quese toggle interface.
