@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2AC224371AC1E913005D48EC /* Obstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AC224361AC1E913005D48EC /* Obstacle.m */; };
+		2AE89E691AE6FDC300EAB7CD /* Plane.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE89E681AE6FDC300EAB7CD /* Plane.m */; };
+		2AE89E6C1AE7028400EAB7CD /* MyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE89E6B1AE7028400EAB7CD /* MyManager.m */; };
 		2AEC8B3D1AC8C1CA002709BC /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEC8B3C1AC8C1CA002709BC /* CoreMotion.framework */; };
 		2AEC8BB41ACB568B002709BC /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AEC8BB31ACB568B002709BC /* Goal.m */; };
 		5B121030197484FA004C1E1D /* flyingHouseActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* flyingHouseActivity.m */; };
@@ -147,6 +149,10 @@
 /* Begin PBXFileReference section */
 		2AC224351AC1E913005D48EC /* Obstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Obstacle.h; path = Source/Obstacle.h; sourceTree = "<group>"; };
 		2AC224361AC1E913005D48EC /* Obstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Obstacle.m; path = Source/Obstacle.m; sourceTree = "<group>"; };
+		2AE89E671AE6FDC300EAB7CD /* Plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Plane.h; path = Source/Plane.h; sourceTree = "<group>"; };
+		2AE89E681AE6FDC300EAB7CD /* Plane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Plane.m; path = Source/Plane.m; sourceTree = "<group>"; };
+		2AE89E6A1AE7028400EAB7CD /* MyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyManager.h; path = Source/MyManager.h; sourceTree = "<group>"; };
+		2AE89E6B1AE7028400EAB7CD /* MyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyManager.m; path = Source/MyManager.m; sourceTree = "<group>"; };
 		2AEC8B3C1AC8C1CA002709BC /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		2AEC8BB21ACB568B002709BC /* Goal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goal.h; sourceTree = "<group>"; };
 		2AEC8BB31ACB568B002709BC /* Goal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Goal.m; sourceTree = "<group>"; };
@@ -437,6 +443,8 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2AE89E671AE6FDC300EAB7CD /* Plane.h */,
+				2AE89E681AE6FDC300EAB7CD /* Plane.m */,
 				2AEC8BB21ACB568B002709BC /* Goal.h */,
 				2AEC8BB31ACB568B002709BC /* Goal.m */,
 				7A40362019DDEF0D007B6E8F /* Platforms */,
@@ -445,6 +453,8 @@
 				2AC224351AC1E913005D48EC /* Obstacle.h */,
 				2AC224361AC1E913005D48EC /* Obstacle.m */,
 				D352B48019EC608A00829775 /* MetalShaders */,
+				2AE89E6A1AE7028400EAB7CD /* MyManager.h */,
+				2AE89E6B1AE7028400EAB7CD /* MyManager.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -816,6 +826,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AE89E691AE6FDC300EAB7CD /* Plane.m in Sources */,
+				2AE89E6C1AE7028400EAB7CD /* MyManager.m in Sources */,
 				2AEC8BB41ACB568B002709BC /* Goal.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,

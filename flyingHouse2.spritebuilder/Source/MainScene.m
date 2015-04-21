@@ -5,6 +5,8 @@
 #import "MainScene.h"
 #import "Obstacle.h"
 
+#import "MyManager.h"
+
 #import "CoreMotion/CoreMotion.h"
 
 @import SpriteKit;
@@ -24,8 +26,6 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 
 @implementation MainScene {
     CCSprite *_hero;
-    CCNode *_walls;
-    
     
     CCPhysicsNode *_pyhNode;
     
@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     NSMutableArray *_obstacles;
     
     CCButton *_restartButton;
+    CCButton *_bombButton;
     
     BOOL _gameOver;
     CGFloat _scrollSpeed;
@@ -46,26 +47,72 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     
     NSInteger _points;
     CCLabelTTF *_scoreLabel;
+    
+    // Record the number of the bombs.
+    NSInteger _bombNum;
+    CCLabelTTF *_bombNumLabel;
+    
+    CGFloat _screenLeftBoard;
 }
 
-//Next, extend the collision handling method to show this restart button:
+// Next, extend the collision handling method to show this restart button:
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero level:(CCNode *)level {
-    NSLog(@"Game Over");
+//    NSLog(@"Game Over");
     [self gameOver];
-
     return TRUE;
 }
 
--(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero goal:(CCNode *)goal {
-//    [goal removeFromParent];
-//    _points++;
-//    _scoreLabel.string = [NSString stringWithFormat:@"%d", _points];
+// The hero hit the goal. Add the score.
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero coin:(CCNode *)coin {
+    [coin removeFromParent];
+    
+    // Add 10 score if hit a coin.
+    [self addScore: 10];
     return TRUE;
 }
+
+// The hero hit the reward of bomb, increase the bomb.
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero awardBomb:(CCNode *)awardBomb {
+    [awardBomb removeFromParent];
+    
+    // Add 100 score if hit a coin.
+    [self addScore: 10];
+    
+    
+    _bombNum++;
+    [self refreshBombLabel];
+    
+    return TRUE;
+}
+
+- (void) refreshBombLabel {
+    _bombNumLabel.string = [NSString stringWithFormat:@"%ld", (long)_bombNum];
+}
+
 
 - (void)restart {
     CCScene *scene = [CCBReader loadAsScene:@"MainScene"];
     [[CCDirector sharedDirector] replaceScene:scene];
+}
+
+- (void)fireBomb {
+    if (_bombNum > 0) {
+        // The bomb number should be reduce by 1.
+        _bombNum--;
+        [self refreshBombLabel];
+        
+        //CCNode *previousObstacle = [_obstacles lastObject];
+        //[previousObstacle removeFromParent];
+        
+        //[_pyhNode removeChild:previousObstacle];
+        
+        for (CCNode *object in _obstacles) {
+            // do something with object
+            [object removeFromParent];
+        }
+        
+        [_obstacles removeAllObjects];
+    }
 }
 
 #pragma The_accelerometer
@@ -108,11 +155,13 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 
 - (void)didLoadFromCCB {
     _grounds = @[_ground1, _ground2, _ground3];
+    
     self.userInteractionEnabled = TRUE;
     
     // set this class as delegate
     _pyhNode.collisionDelegate = self;
-    // set collision txpe
+    
+    // set collision type
     
     _hero.physicsBody.collisionType = @"hero";
     _hero.zOrder = DrawingOrdeHero;
@@ -125,21 +174,43 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     
     // Init the speed.
     _scrollSpeed = 80.f;
+    
+    // Init the board.
+    _screenLeftBoard = 0;
+    
+    // Init the score.
+    _points = 0;
+    
+    // Init the bomb number.
+    _bombNum = 3;
+    [self refreshBombLabel];
 }
 
-- (void) addScoreByOne {
-    _points++;
-    _scoreLabel.string = [NSString stringWithFormat:@"%d", _points];
+- (void) addScore: (NSInteger)score {
+    _points += score;
+    _scoreLabel.string = [NSString stringWithFormat:@"%ld", (long)_points];
 }
 
 - (void)spawnNewObstacle {
     CCNode *previousObstacle = [_obstacles lastObject];
+    
     CGFloat previousObstacleXPosition = previousObstacle.position.x;
     if (!previousObstacle) {
         // this is the first obstacle
-        previousObstacleXPosition = firstObstaclePosition;
+        
+        // When the Balloons are cleared, the position should be in the new place.
+        previousObstacleXPosition = _screenLeftBoard + firstObstaclePosition;
     }
-    CCNode *obstacle = [CCBReader load:@"obstacle"];
+    
+    // To determine which to generate.
+    CGFloat randomObstacle = ((double)arc4random() / ARC4RANDOM_MAX);
+    CCNode *obstacle = NULL;
+    if (randomObstacle < 0.8) {
+        obstacle = [CCBReader load:@"obstacle"];
+    } else {
+        obstacle = [CCBReader load:@"plane"];
+    }
+    
     obstacle.position = ccp(previousObstacleXPosition + distanceBetweenObstacles, 0);
     
     CGFloat random = ((double)arc4random() / ARC4RANDOM_MAX);
@@ -152,7 +223,7 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     [_pyhNode addChild:obstacle];
     [_obstacles addObject:obstacle];
     
-    NSLog(@"the position of obstacle: %f", obstacle.position.x);
+    //NSLog(@"the position of obstacle: %f", obstacle.position.x);
     //[self addScoreByOne];
     
     // value between 0.f and 1.f
@@ -169,9 +240,7 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
         // clamp velocity
         float yVelocity = clampf(_hero.physicsBody.velocity.y, -1 * MAXFLOAT, 200.f);
         _hero.physicsBody.velocity = ccp(0, yVelocity);
-    }
-    
-    
+    }        
 }
 
 - (void)gameOver {
@@ -179,6 +248,10 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
         _scrollSpeed = 0.f;
         _gameOver = TRUE;
         _restartButton.visible = TRUE;
+        
+        // Make the bomb button to be invisible.
+        _bombButton.visible = FALSE;
+        
         _hero.rotation = 90.f;
         _hero.physicsBody.allowsRotation = FALSE;
         
@@ -191,26 +264,99 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
         
         // Stop the Accelerometer.
         [_motionManager stopAccelerometerUpdates];
+        
+        // Show the score board.
+        [self showScoreBoard];
     }
 }
 
-- (void)update:(CCTime)delta {
-    _hero.position = ccp(_hero.position.x + delta * _scrollSpeed, _hero.position.y);
+- (void)showScoreBoard {
+    MyManager *sharedManager = [MyManager sharedManager];
     
-    //_walls.position = ccp(_walls.position.x + delta * _scrollSpeed, _walls.position.y);
+    //CCLabelBMFont *label = [CCLabelBMFont labelWithString:[NSString stringWithString: sharedManager.SScore] fntFile:@"num.fnt"];
+    //CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"34" fntFile:@"num.fnt"];
+    //[self addChild:label];
+    
+    //- Create a CCLabelBMFont and add it on your Layer:
+    //CGSize size = [[CCDirector sharedDirector] winSize];
+    
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Preview text" fntFile:@"num.fnt"];
+    // position the label on the center of the screen
+    label.position = ccp( screenWidth /2 , screenHeight/2 );
+    // add the label as a child to this Layer
+    [self addChild: label];
+
+    
+    //label.position = ccp(_screenLeftBoard + screenWidth/2+40, screenHeight-95);
+    label.position = ccp(_screenLeftBoard + screenWidth/2+40, screenHeight-200);
+    
+    // Get scores array stored in user defaults
+    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // Get high scores array from “defaults” object
+    //NSMutableArray *highScores = [NSMutableArray arrayWithArray:[defaults arrayForKey:@"scores"]];
+    
+    // Iterate thru high scores; see if current point value is higher than the stored values
+    //for (int i = 0; i < [highScores count]; i++)
+    {
+        //if (_points >= [[highScores objectAtIndex:i] intValue])
+        {
+            // Insert new high score, which pushes all others down
+            //[highScores insertObject:[NSNumber numberWithInt:_points] atIndex:i];
+            
+            // Remove last score, to make sure there are 5 enteries in the score array
+            //[highScores removeLastObject];
+            
+            // Re-save scores array to user defaults
+            //[defaults setObject:highScores forKey:@"scores"];
+            
+            //[defaults synchronize];
+            
+            NSLog(@"Saved new hgh score of %li", (long)_points);
+            
+            // Bust out of the loop
+            //break;
+        }
+    }
+}
+
+- (void)moveObjectRight:(CCNode*)node time:(CCTime)delta {
+    node.position = ccp(node.position.x + delta * _scrollSpeed, node.position.y);
+}
+
+- (void)update:(CCTime)delta {    
+    // Move the hero to the right in the world.
+    [self moveObjectRight:_hero time:delta];
+    
+    /*
+    NSLog(@"_wall1: %f, The _wall2: %f",
+          _wall1.position.x,
+          _wall2.position.x);
+     */
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    _screenLeftBoard = _screenLeftBoard + delta * _scrollSpeed;
+    CGFloat screenRightBoard = _screenLeftBoard + screenWidth;
     
     // Use this to detect the movement of the house.
     CMAccelerometerData *accelerometerData = _motionManager.accelerometerData;
     CMAcceleration acceleration = accelerometerData.acceleration;
     
-    //CGFloat newXPosition = _hero.position.x + acceleration.x * 1000 * delta;
     CGFloat newXPosition = _hero.position.x + acceleration.x * 500 * delta;
     
-    // Limit the value to be from 0 to self.contentSize.width
-    //newXPosition = clampf(newXPosition, 0, self.contentSize.width);
+    // Limit the range of the X and Y position in the screen.
+    newXPosition = clampf(newXPosition, _screenLeftBoard, screenRightBoard);
+    CGFloat newYPosition = clampf(_hero.position.y, 0, screenHeight);
     
-    _hero.position = CGPointMake(newXPosition, _hero.position.y);
-    //    _label.position = CGPointMake(newXPosition, _label.position.y);
+    _hero.position = CGPointMake(newXPosition, newYPosition);
     
     _pyhNode.position = ccp(_pyhNode.position.x - delta * _scrollSpeed, _pyhNode.position.y);
     
@@ -221,15 +367,12 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
         // get the screen position of the ground
         CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
         
-        //NSLog(@"ground.position: %f, The groundWorldPosition: %f, groundScreenPosition: %f", ground.position.x, groundWorldPosition.x, groundScreenPosition.x);
-        
         // if the left corner is one complete width off the screen, move it to the right
         if (groundScreenPosition.x <= (-1 * ground.contentSize.width)) {
             ground.position = ccp(ground.position.x + 3 * ground.contentSize.width, ground.position.y);
             
-            //NSLog(@"ground.position: %f, The groundWorldPosition: %f, groundScreenPosition: %f", ground.position.x, groundWorldPosition.x, groundScreenPosition.x);
-            
-            [self addScoreByOne];            
+            // Add one score.
+            [self addScore: 1];
         }
     }    
 

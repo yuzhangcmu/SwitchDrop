@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>11</integer>
+	<integer>12</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -41,7 +41,7 @@
 		<array>
 			<dict>
 				<key>UUID</key>
-				<integer>4</integer>
+				<integer>8</integer>
 				<key>baseClass</key>
 				<string>CCSprite</string>
 				<key>children</key>
@@ -49,9 +49,9 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>hot-air-balloon-clip-art-free-vector-maidis-horizontal-striped-hot-air-balloons-clip-art_103339_Maidis_Horizontal_Striped_Hot_Air_Balloons_clip_art_hight</string>
+				<string>Coins-512</string>
 				<key>memberVarAssignmentName</key>
-				<string>_bigBalloon</string>
+				<string>_awardBomb</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>physicsBody</key>
@@ -81,106 +81,40 @@
 					<key>points</key>
 					<array>
 						<array>
-							<real>62.837493896484375</real>
-							<real>80.112533569335938</real>
+							<real>48.317317962646484</real>
+							<real>25.590017318725586</real>
 						</array>
 						<array>
-							<real>27.637485504150391</real>
-							<real>124.91254425048828</real>
+							<real>42.013210296630859</real>
+							<real>235.51997375488281</real>
 						</array>
 						<array>
-							<real>-7.5625228881835938</real>
-							<real>204.91256713867188</real>
+							<real>231.13636779785156</real>
+							<real>230.27171325683594</real>
 						</array>
 						<array>
-							<real>14.837482452392578</real>
-							<real>275.31253051757812</real>
-						</array>
-						<array>
-							<real>98.037498474121094</real>
-							<real>304.112548828125</real>
-						</array>
-						<array>
-							<real>168.43751525878906</real>
-							<real>268.91253662109375</real>
-						</array>
-						<array>
-							<real>181.23751831054688</real>
-							<real>198.51255798339844</real>
-						</array>
-						<array>
-							<real>171.63751220703125</real>
-							<real>147.31254577636719</real>
-						</array>
-						<array>
-							<real>126.83750915527344</real>
-							<real>80.112533569335938</real>
-						</array>
-						<array>
-							<real>120.43750762939453</real>
-							<real>0.11246506124734879</real>
-						</array>
-						<array>
-							<real>72.4375</real>
-							<real>3.3124659061431885</real>
+							<real>224.83226013183594</real>
+							<real>25.590017318725586</real>
 						</array>
 					</array>
 					<key>polygons</key>
 					<array>
 						<array>
 							<array>
-								<real>62.837493896484375</real>
-								<real>80.112533569335938</real>
+								<real>224.83226013183594</real>
+								<real>25.590017318725586</real>
 							</array>
 							<array>
-								<real>72.4375</real>
-								<real>3.3124659061431885</real>
+								<real>231.13636779785156</real>
+								<real>230.27171325683594</real>
 							</array>
 							<array>
-								<real>120.43750762939453</real>
-								<real>0.11246506124734879</real>
+								<real>42.013210296630859</real>
+								<real>235.51997375488281</real>
 							</array>
 							<array>
-								<real>126.83750915527344</real>
-								<real>80.112533569335938</real>
-							</array>
-						</array>
-						<array>
-							<array>
-								<real>126.83750915527344</real>
-								<real>80.112533569335938</real>
-							</array>
-							<array>
-								<real>171.63751220703125</real>
-								<real>147.31254577636719</real>
-							</array>
-							<array>
-								<real>181.23751831054688</real>
-								<real>198.51255798339844</real>
-							</array>
-							<array>
-								<real>168.43751525878906</real>
-								<real>268.91253662109375</real>
-							</array>
-							<array>
-								<real>98.037498474121094</real>
-								<real>304.112548828125</real>
-							</array>
-							<array>
-								<real>14.837482452392578</real>
-								<real>275.31253051757812</real>
-							</array>
-							<array>
-								<real>-7.5625228881835938</real>
-								<real>204.91256713867188</real>
-							</array>
-							<array>
-								<real>27.637485504150391</real>
-								<real>124.91254425048828</real>
-							</array>
-							<array>
-								<real>62.837493896484375</real>
-								<real>80.112533569335938</real>
+								<real>48.317317962646484</real>
+								<real>25.590017318725586</real>
 							</array>
 						</array>
 					</array>
@@ -203,7 +137,7 @@
 						<key>value</key>
 						<array>
 							<real>0.0</real>
-							<real>0.0</real>
+							<real>-126.17709350585938</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -217,7 +151,7 @@
 						<key>value</key>
 						<array>
 							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.45210060477256775</real>
 						</array>
 					</dict>
 					<dict>
@@ -227,8 +161,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.60000002384185791</real>
-							<real>0.60000002384185791</real>
+							<real>0.15862679481506348</real>
+							<real>0.19053974747657776</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -241,7 +175,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/hot-air-balloon-clip-art-free-vector-maidis-horizontal-striped-hot-air-balloons-clip-art_103339_Maidis_Horizontal_Striped_Hot_Air_Balloons_clip_art_hight.png</string>
+							<string>FlappyFlyArtPack/Coins-512.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -277,12 +211,10 @@
 						<array/>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
-				<integer>8</integer>
+				<integer>11</integer>
 				<key>baseClass</key>
 				<string>CCSprite</string>
 				<key>children</key>
@@ -290,9 +222,9 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>Coins-512</string>
+				<string>plane</string>
 				<key>memberVarAssignmentName</key>
-				<string>_coin</string>
+				<string>_plane</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>physicsBody</key>
@@ -322,40 +254,186 @@
 					<key>points</key>
 					<array>
 						<array>
-							<real>0.0</real>
-							<real>0.0</real>
+							<real>113.99993896484375</real>
+							<real>247.4140625</real>
 						</array>
 						<array>
-							<real>0.0</real>
-							<real>264</real>
+							<real>277.99993896484375</real>
+							<real>183.4140625</real>
 						</array>
 						<array>
-							<real>260</real>
-							<real>264</real>
+							<real>319.99993896484375</real>
+							<real>203.4140625</real>
 						</array>
 						<array>
-							<real>260</real>
-							<real>0.0</real>
+							<real>365.99993896484375</real>
+							<real>185.4140625</real>
+						</array>
+						<array>
+							<real>337.99993896484375</real>
+							<real>157.4140625</real>
+						</array>
+						<array>
+							<real>331.99993896484375</real>
+							<real>119.4140625</real>
+						</array>
+						<array>
+							<real>285.99993896484375</real>
+							<real>99.4140625</real>
+						</array>
+						<array>
+							<real>247.99993896484375</real>
+							<real>89.4140625</real>
+						</array>
+						<array>
+							<real>261.99993896484375</real>
+							<real>53.4140625</real>
+						</array>
+						<array>
+							<real>209.99993896484375</real>
+							<real>55.4140625</real>
+						</array>
+						<array>
+							<real>169.99993896484375</real>
+							<real>57.4140625</real>
+						</array>
+						<array>
+							<real>155.99993896484375</real>
+							<real>85.4140625</real>
+						</array>
+						<array>
+							<real>117.99993896484375</real>
+							<real>99.4140625</real>
+						</array>
+						<array>
+							<real>67.99993896484375</real>
+							<real>117.4140625</real>
+						</array>
+						<array>
+							<real>33.99993896484375</real>
+							<real>151.4140625</real>
+						</array>
+						<array>
+							<real>59.99993896484375</real>
+							<real>181.4140625</real>
 						</array>
 					</array>
 					<key>polygons</key>
 					<array>
 						<array>
 							<array>
-								<real>260</real>
-								<real>0.0</real>
+								<real>59.99993896484375</real>
+								<real>181.4140625</real>
 							</array>
 							<array>
-								<real>260</real>
-								<real>264</real>
+								<real>33.99993896484375</real>
+								<real>151.4140625</real>
 							</array>
 							<array>
-								<real>0.0</real>
-								<real>264</real>
+								<real>67.99993896484375</real>
+								<real>117.4140625</real>
+							</array>
+						</array>
+						<array>
+							<array>
+								<real>59.99993896484375</real>
+								<real>181.4140625</real>
 							</array>
 							<array>
-								<real>0.0</real>
-								<real>0.0</real>
+								<real>67.99993896484375</real>
+								<real>117.4140625</real>
+							</array>
+							<array>
+								<real>117.99993896484375</real>
+								<real>99.4140625</real>
+							</array>
+						</array>
+						<array>
+							<array>
+								<real>155.99993896484375</real>
+								<real>85.4140625</real>
+							</array>
+							<array>
+								<real>169.99993896484375</real>
+								<real>57.4140625</real>
+							</array>
+							<array>
+								<real>209.99993896484375</real>
+								<real>55.4140625</real>
+							</array>
+							<array>
+								<real>261.99993896484375</real>
+								<real>53.4140625</real>
+							</array>
+							<array>
+								<real>247.99993896484375</real>
+								<real>89.4140625</real>
+							</array>
+						</array>
+						<array>
+							<array>
+								<real>337.99993896484375</real>
+								<real>157.4140625</real>
+							</array>
+							<array>
+								<real>365.99993896484375</real>
+								<real>185.4140625</real>
+							</array>
+							<array>
+								<real>319.99993896484375</real>
+								<real>203.4140625</real>
+							</array>
+						</array>
+						<array>
+							<array>
+								<real>337.99993896484375</real>
+								<real>157.4140625</real>
+							</array>
+							<array>
+								<real>319.99993896484375</real>
+								<real>203.4140625</real>
+							</array>
+							<array>
+								<real>277.99993896484375</real>
+								<real>183.4140625</real>
+							</array>
+						</array>
+						<array>
+							<array>
+								<real>277.99993896484375</real>
+								<real>183.4140625</real>
+							</array>
+							<array>
+								<real>113.99993896484375</real>
+								<real>247.4140625</real>
+							</array>
+							<array>
+								<real>59.99993896484375</real>
+								<real>181.4140625</real>
+							</array>
+							<array>
+								<real>117.99993896484375</real>
+								<real>99.4140625</real>
+							</array>
+							<array>
+								<real>155.99993896484375</real>
+								<real>85.4140625</real>
+							</array>
+							<array>
+								<real>247.99993896484375</real>
+								<real>89.4140625</real>
+							</array>
+							<array>
+								<real>285.99993896484375</real>
+								<real>99.4140625</real>
+							</array>
+							<array>
+								<real>331.99993896484375</real>
+								<real>119.4140625</real>
+							</array>
+							<array>
+								<real>337.99993896484375</real>
+								<real>157.4140625</real>
 							</array>
 						</array>
 					</array>
@@ -377,8 +455,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.0</real>
-							<real>-113.17708587646484</real>
+							<real>13</real>
+							<real>-45</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -392,7 +470,7 @@
 						<key>value</key>
 						<array>
 							<real>0.5</real>
-							<real>0.45210060477256775</real>
+							<real>0.5</real>
 						</array>
 					</dict>
 					<dict>
@@ -402,8 +480,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.2377856969833374</real>
-							<real>0.27836126089096069</real>
+							<real>0.5</real>
+							<real>0.5</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -416,7 +494,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>FlappyFlyArtPack/coin3.png</string>
+							<string>FlappyFlyArtPack/airplane2.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -455,7 +533,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>Obstacle</string>
+		<string>Plane</string>
 		<key>displayName</key>
 		<string>CCNode</string>
 		<key>memberVarAssignmentName</key>
@@ -524,6 +602,8 @@
 				</array>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
