@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>12</integer>
+	<integer>13</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -161,8 +161,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.15862679481506348</real>
-							<real>0.19053974747657776</real>
+							<real>0.029999999329447746</real>
+							<real>0.029999999329447746</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -175,7 +175,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>FlappyFlyArtPack/Coins-512.png</string>
+							<string>FlappyFlyArtPack/1371207.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -571,8 +571,8 @@
 				<string>Size</string>
 				<key>value</key>
 				<array>
-					<real>0.0</real>
-					<real>0.0</real>
+					<real>200</real>
+					<real>100</real>
 					<integer>0</integer>
 					<integer>0</integer>
 				</array>
@@ -602,8 +602,6 @@
 				</array>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

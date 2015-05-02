@@ -2393,8 +2393,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -2530,25 +2528,44 @@
 			<key>chainedSequenceId</key>
 			<integer>-1</integer>
 			<key>length</key>
-			<real>10</real>
+			<real>250</real>
 			<key>name</key>
 			<string>Default Timeline</string>
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.0</real>
+			<real>9.9666662216186523</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
-			<real>128</real>
+			<real>32</real>
 			<key>sequenceId</key>
 			<integer>0</integer>
 			<key>soundChannel</key>
 			<dict>
 				<key>isExpanded</key>
-				<false/>
+				<true/>
 				<key>keyframes</key>
-				<array/>
+				<array>
+					<dict>
+						<key>easing</key>
+						<dict>
+							<key>type</key>
+							<integer>0</integer>
+						</dict>
+						<key>time</key>
+						<real>0.0</real>
+						<key>type</key>
+						<integer>11</integer>
+						<key>value</key>
+						<array>
+							<string>Sounds/Up_Theme_Song_Married_Life_.wav</string>
+							<real>1</real>
+							<real>0.0</real>
+							<real>1</real>
+						</array>
+					</dict>
+				</array>
 				<key>type</key>
 				<integer>10</integer>
 			</dict>

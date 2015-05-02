@@ -64,6 +64,16 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 
 // The hero hit the goal. Add the score.
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero coin:(CCNode *)coin {
+    // load particle effect
+    CCParticleSystem *getCoin = (CCParticleSystem *)[CCBReader load:@"getCoin"];
+    // make the particle effect clean itself up, once it is completed
+    getCoin.autoRemoveOnFinish = TRUE;
+    // place the particle effect on the seals position
+    getCoin.position = coin.position;
+    
+    // add the particle effect to the same node the seal is on
+    [_pyhNode addChild:getCoin];
+    
     [coin removeFromParent];
     
     // Add 10 score if hit a coin.
@@ -73,11 +83,20 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 
 // The hero hit the reward of bomb, increase the bomb.
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero awardBomb:(CCNode *)awardBomb {
+    // load particle effect
+    CCParticleSystem *getBomb = (CCParticleSystem *)[CCBReader load:@"getCoin"];
+    // make the particle effect clean itself up, once it is completed
+    getBomb.autoRemoveOnFinish = TRUE;
+    // getBomb the particle effect on the seals position
+    getBomb.position = awardBomb.position;
+    
+    // add the particle effect to the same node the seal is on
+    [_pyhNode addChild:getBomb];
+    
     [awardBomb removeFromParent];
     
     // Add 100 score if hit a coin.
-    [self addScore: 10];
-    
+    [self addScore: 10];    
     
     _bombNum++;
     [self refreshBombLabel];
@@ -106,9 +125,32 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
         
         //[_pyhNode removeChild:previousObstacle];
         
+        
+        // load particle effect
+        CCParticleSystem *bomb = (CCParticleSystem *)[CCBReader load:@"bombExplosion"];
+        // make the particle effect clean itself up, once it is completed
+        bomb.autoRemoveOnFinish = TRUE;
+        // place the particle effect on the seals position
+        bomb.position = _hero.position;
+        
+        // add the particle effect to the same node the seal is on
+        [_pyhNode addChild:bomb];
+
+        
         for (CCNode *object in _obstacles) {
-            // do something with object
-            [object removeFromParent];
+            
+            // load particle effect
+            CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"obstacleExplosion"];
+            // make the particle effect clean itself up, once it is completed
+            explosion.autoRemoveOnFinish = TRUE;
+            // place the particle effect on the seals position
+            explosion.position = object.position;
+            
+            // add the particle effect to the same node the seal is on
+            [object.parent addChild:explosion];
+            
+            // finally, remove the destroyed object
+            [object removeFromParent];            
         }
         
         [_obstacles removeAllObjects];
@@ -168,9 +210,8 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     
     _obstacles = [NSMutableArray array];
     
-    [self spawnNewObstacle];
-    [self spawnNewObstacle];
-    [self spawnNewObstacle];
+    // Create 4 obstacles.
+    [self creaeInitObstacles];
     
     // Init the speed.
     _scrollSpeed = 80.f;
@@ -184,6 +225,12 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     // Init the bomb number.
     _bombNum = 3;
     [self refreshBombLabel];
+}
+
+- (void) creaeInitObstacles {
+    for (int i = 0; i < 4; i++) {
+        [self spawnNewObstacle];
+    }
 }
 
 - (void) addScore: (NSInteger)score {
@@ -271,58 +318,58 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 }
 
 - (void)showScoreBoard {
-    MyManager *sharedManager = [MyManager sharedManager];
-    
-    //CCLabelBMFont *label = [CCLabelBMFont labelWithString:[NSString stringWithString: sharedManager.SScore] fntFile:@"num.fnt"];
-    //CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"34" fntFile:@"num.fnt"];
-    //[self addChild:label];
-    
-    //- Create a CCLabelBMFont and add it on your Layer:
-    //CGSize size = [[CCDirector sharedDirector] winSize];
-    
-    
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    CGFloat screenHeight = screenRect.size.height;
-    
-    CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Preview text" fntFile:@"num.fnt"];
-    // position the label on the center of the screen
-    label.position = ccp( screenWidth /2 , screenHeight/2 );
-    // add the label as a child to this Layer
-    [self addChild: label];
-
-    
-    //label.position = ccp(_screenLeftBoard + screenWidth/2+40, screenHeight-95);
-    label.position = ccp(_screenLeftBoard + screenWidth/2+40, screenHeight-200);
-    
-    // Get scores array stored in user defaults
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    // Get high scores array from “defaults” object
-    //NSMutableArray *highScores = [NSMutableArray arrayWithArray:[defaults arrayForKey:@"scores"]];
-    
-    // Iterate thru high scores; see if current point value is higher than the stored values
-    //for (int i = 0; i < [highScores count]; i++)
-    {
-        //if (_points >= [[highScores objectAtIndex:i] intValue])
-        {
-            // Insert new high score, which pushes all others down
-            //[highScores insertObject:[NSNumber numberWithInt:_points] atIndex:i];
-            
-            // Remove last score, to make sure there are 5 enteries in the score array
-            //[highScores removeLastObject];
-            
-            // Re-save scores array to user defaults
-            //[defaults setObject:highScores forKey:@"scores"];
-            
-            //[defaults synchronize];
-            
-            NSLog(@"Saved new hgh score of %li", (long)_points);
-            
-            // Bust out of the loop
-            //break;
-        }
-    }
+//    MyManager *sharedManager = [MyManager sharedManager];
+//    
+//    //CCLabelBMFont *label = [CCLabelBMFont labelWithString:[NSString stringWithString: sharedManager.SScore] fntFile:@"num.fnt"];
+//    //CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"34" fntFile:@"num.fnt"];
+//    //[self addChild:label];
+//    
+//    //- Create a CCLabelBMFont and add it on your Layer:
+//    //CGSize size = [[CCDirector sharedDirector] winSize];
+//    
+//    
+//    CGRect screenRect = [[UIScreen mainScreen] bounds];
+//    CGFloat screenWidth = screenRect.size.width;
+//    CGFloat screenHeight = screenRect.size.height;
+//    
+//    CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Preview text" fntFile:@"num.fnt"];
+//    // position the label on the center of the screen
+//    label.position = ccp( screenWidth /2 , screenHeight/2 );
+//    // add the label as a child to this Layer
+//    [self addChild: label];
+//
+//    
+//    //label.position = ccp(_screenLeftBoard + screenWidth/2+40, screenHeight-95);
+//    label.position = ccp(_screenLeftBoard + screenWidth/2+40, screenHeight-200);
+//    
+//    // Get scores array stored in user defaults
+//    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    
+//    // Get high scores array from “defaults” object
+//    //NSMutableArray *highScores = [NSMutableArray arrayWithArray:[defaults arrayForKey:@"scores"]];
+//    
+//    // Iterate thru high scores; see if current point value is higher than the stored values
+//    //for (int i = 0; i < [highScores count]; i++)
+//    {
+//        //if (_points >= [[highScores objectAtIndex:i] intValue])
+//        {
+//            // Insert new high score, which pushes all others down
+//            //[highScores insertObject:[NSNumber numberWithInt:_points] atIndex:i];
+//            
+//            // Remove last score, to make sure there are 5 enteries in the score array
+//            //[highScores removeLastObject];
+//            
+//            // Re-save scores array to user defaults
+//            //[defaults setObject:highScores forKey:@"scores"];
+//            
+//            //[defaults synchronize];
+//            
+//            NSLog(@"Saved new hgh score of %li", (long)_points);
+//            
+//            // Bust out of the loop
+//            //break;
+//        }
+//    }
 }
 
 - (void)moveObjectRight:(CCNode*)node time:(CCTime)delta {
@@ -374,11 +421,35 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
             // Add one score.
             [self addScore: 1];
         }
-    }    
-
-    [self spawnNewObstacle];
+    }
     
+    NSMutableArray *offScreenObstacles = nil;
+    for (CCNode *obstacle in _obstacles) {
+        CGPoint obstacleWorldPosition = [_pyhNode convertToWorldSpace:obstacle.position];
+        CGPoint obstacleScreenPosition = [self convertToNodeSpace:obstacleWorldPosition];
+        
+        //NSLog(@"The position: %f", obstacleScreenPosition.x);
+        if (obstacleScreenPosition.x < -obstacle.contentSize.width) {
+            NSLog(@"Delete one obstacle, The position: %f, the width: %f", obstacleScreenPosition.x, obstacle.contentSize.width);
+            if (!offScreenObstacles) {
+                offScreenObstacles = [NSMutableArray array];
+            }
+            [offScreenObstacles addObject:obstacle];
+        }
+    }
     
+    for (CCNode *obstacleToRemove in offScreenObstacles) {
+        [obstacleToRemove removeFromParent];
+        [_obstacles removeObject:obstacleToRemove];
+        // for each removed obstacle, add a new one
+        [self spawnNewObstacle];
+    }
+    
+    // If the obstacles are cleared, also create a new one.
+    if (!_obstacles.count) {
+        // Create 4 obstacles.
+        [self creaeInitObstacles];
+    }
 }
 
 @end
