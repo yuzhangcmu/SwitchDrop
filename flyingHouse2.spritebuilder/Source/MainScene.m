@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     CCButton *_restartButton;
     CCButton *_bombButton;
     
+    
+    
     BOOL _gameOver;
     CGFloat _scrollSpeed;
     
@@ -47,6 +49,18 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     
     NSInteger _points;
     CCLabelTTF *_scoreLabel;
+    
+    // The final score.
+    CCLabelTTF *_scoreFinalTextLabel;
+    CCLabelTTF *_scoreFinalLabel;
+    
+    CCLabelTTF *_highScoreTextLabel;
+    CCLabelTTF *_highScoreLabel;
+    
+    CCLabelTTF *_tapInfoLabel;
+    CCLabelTTF *_tapInfoPic;
+    
+    CCLabelTTF *_coinInfoLabel;
     
     // Record the number of the bombs.
     NSInteger _bombNum;
@@ -66,8 +80,10 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair hero:(CCNode *)hero coin:(CCNode *)coin {
     // load particle effect
     CCParticleSystem *getCoin = (CCParticleSystem *)[CCBReader load:@"getCoin"];
+    
     // make the particle effect clean itself up, once it is completed
     getCoin.autoRemoveOnFinish = TRUE;
+    
     // place the particle effect on the seals position
     getCoin.position = coin.position;
     
@@ -78,6 +94,9 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
     
     // Add 10 score if hit a coin.
     [self addScore: 10];
+        
+    _coinInfoLabel.visible = FALSE;
+    
     return TRUE;
 }
 
@@ -236,6 +255,9 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 - (void) addScore: (NSInteger)score {
     _points += score;
     _scoreLabel.string = [NSString stringWithFormat:@"%ld", (long)_points];
+    
+    _scoreFinalLabel.string = [NSString stringWithFormat:@"%ld", (long)_points];
+    //_highScoreLabel.string = [NSString stringWithFormat:@"%ld", (long)_points];
 }
 
 - (void)spawnNewObstacle {
@@ -287,6 +309,10 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
         // clamp velocity
         float yVelocity = clampf(_hero.physicsBody.velocity.y, -1 * MAXFLOAT, 200.f);
         _hero.physicsBody.velocity = ccp(0, yVelocity);
+        
+        
+        _tapInfoPic.visible = FALSE;
+        _tapInfoLabel.visible = FALSE;
     }        
 }
 
@@ -318,58 +344,53 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 }
 
 - (void)showScoreBoard {
-//    MyManager *sharedManager = [MyManager sharedManager];
-//    
-//    //CCLabelBMFont *label = [CCLabelBMFont labelWithString:[NSString stringWithString: sharedManager.SScore] fntFile:@"num.fnt"];
-//    //CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"34" fntFile:@"num.fnt"];
-//    //[self addChild:label];
-//    
-//    //- Create a CCLabelBMFont and add it on your Layer:
-//    //CGSize size = [[CCDirector sharedDirector] winSize];
-//    
-//    
-//    CGRect screenRect = [[UIScreen mainScreen] bounds];
-//    CGFloat screenWidth = screenRect.size.width;
-//    CGFloat screenHeight = screenRect.size.height;
-//    
-//    CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Preview text" fntFile:@"num.fnt"];
-//    // position the label on the center of the screen
-//    label.position = ccp( screenWidth /2 , screenHeight/2 );
-//    // add the label as a child to this Layer
-//    [self addChild: label];
-//
-//    
-//    //label.position = ccp(_screenLeftBoard + screenWidth/2+40, screenHeight-95);
-//    label.position = ccp(_screenLeftBoard + screenWidth/2+40, screenHeight-200);
-//    
-//    // Get scores array stored in user defaults
-//    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    
-//    // Get high scores array from “defaults” object
-//    //NSMutableArray *highScores = [NSMutableArray arrayWithArray:[defaults arrayForKey:@"scores"]];
-//    
-//    // Iterate thru high scores; see if current point value is higher than the stored values
-//    //for (int i = 0; i < [highScores count]; i++)
-//    {
-//        //if (_points >= [[highScores objectAtIndex:i] intValue])
-//        {
-//            // Insert new high score, which pushes all others down
-//            //[highScores insertObject:[NSNumber numberWithInt:_points] atIndex:i];
-//            
-//            // Remove last score, to make sure there are 5 enteries in the score array
-//            //[highScores removeLastObject];
-//            
-//            // Re-save scores array to user defaults
-//            //[defaults setObject:highScores forKey:@"scores"];
-//            
-//            //[defaults synchronize];
-//            
-//            NSLog(@"Saved new hgh score of %li", (long)_points);
-//            
-//            // Bust out of the loop
-//            //break;
-//        }
-//    }
+    MyManager *sharedManager = [MyManager sharedManager];
+        
+    _scoreFinalTextLabel.visible = TRUE;;
+    _scoreFinalLabel.visible = TRUE;;
+    
+    _highScoreTextLabel.visible = TRUE;;
+    _highScoreLabel.visible = TRUE;;
+    
+    // Get scores array stored in user defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // Get high scores array from “defaults” object
+    NSMutableArray *highScores = [NSMutableArray arrayWithArray:[defaults arrayForKey:@"scores"]];
+    
+    if ([highScores count] == 0) {
+        // Insert new high score, which pushes all others down
+        [highScores insertObject:[NSNumber numberWithInt:_points] atIndex:0];
+//        [highScores insertObject:[NSNumber numberWithInt:_points] atIndex:0];
+  //      [highScores insertObject:[NSNumber numberWithInt:_points] atIndex:0];
+    //    [highScores insertObject:[NSNumber numberWithInt:_points] atIndex:0];
+      //  [highScores insertObject:[NSNumber numberWithInt:_points] atIndex:0];
+    }
+    
+    // Iterate thru high scores; see if current point value is higher than the stored values
+    for (int i = 0; i < [highScores count]; i++)
+    {
+        if (_points >= [[highScores objectAtIndex:i] intValue])
+        {
+            // Insert new high score, which pushes all others down
+            [highScores insertObject:[NSNumber numberWithInt:_points] atIndex:i];
+            
+            // Remove last score, to make sure there are 5 enteries in the score array
+            [highScores removeLastObject];
+            
+            // Re-save scores array to user defaults
+            [defaults setObject:highScores forKey:@"scores"];
+            
+            [defaults synchronize];
+            
+            NSLog(@"Saved new high score of %li", (long)_points);
+            
+            // Bust out of the loop
+            break;
+        }
+    }
+    
+    _highScoreLabel.string = [NSString stringWithFormat:@"%d", [[highScores objectAtIndex:0] intValue]];
 }
 
 - (void)moveObjectRight:(CCNode*)node time:(CCTime)delta {
